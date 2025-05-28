@@ -1,21 +1,21 @@
-const noteElement = document.getElementById('note');
-const frequencyElement = document.getElementById('frequency');
-const audioFileInput = document.getElementById('audioFile');
-const startButton = document.getElementById('start');
+const noteElement = document.getElementById("note");
+const frequencyElement = document.getElementById("frequency");
+const audioFileInput = document.getElementById("audioFile");
+const startButton = document.getElementById("start");
 
 const noteFrequencies = [
-    { note: 'C', frequency: 261.63 },
-    { note: 'C#', frequency: 277.18 },
-    { note: 'D', frequency: 293.66 },
-    { note: 'D#', frequency: 311.13 },
-    { note: 'E', frequency: 329.63 },
-    { note: 'F', frequency: 349.23 },
-    { note: 'F#', frequency: 369.99 },
-    { note: 'G', frequency: 392.00 },
-    { note: 'G#', frequency: 415.30 },
-    { note: 'A', frequency: 440.00 },
-    { note: 'A#', frequency: 466.16 },
-    { note: 'B', frequency: 493.88 },
+    {note: "C", frequency: 261.63},
+    {note: "C#", frequency: 277.18},
+    {note: "D", frequency: 293.66},
+    {note: "D#", frequency: 311.13},
+    {note: "E", frequency: 329.63},
+    {note: "F", frequency: 349.23},
+    {note: "F#", frequency: 369.99},
+    {note: "G", frequency: 392.00},
+    {note: "G#", frequency: 415.30},
+    {note: "A", frequency: 440.00},
+    {note: "A#", frequency: 466.16},
+    {note: "B", frequency: 493.88},
 ];
 
 function getClosestNote(frequency) {
@@ -36,7 +36,7 @@ function getClosestNote(frequency) {
 async function startNoteDetection() {
     const file = audioFileInput.files[0];
     if (!file) {
-        alert('Please select an MP3 file first.');
+        alert("Please select an MP3 file first.");
         return;
     }
 
@@ -57,7 +57,7 @@ async function startNoteDetection() {
         const bufferLength = analyser.frequencyBinCount;
         const dataArray = new Float32Array(bufferLength);
 
-        const frequencySamples = [];
+        const samples = [];
 
         function detectPitch() {
             analyser.getFloatFrequencyData(dataArray);
@@ -73,13 +73,13 @@ async function startNoteDetection() {
             }
 
             const frequency = audioContext.sampleRate * maxIndex / analyser.fftSize;
-            frequencySamples.push(frequency);
+            samples.push(frequency);
 
-            if (frequencySamples.length > 50) {
-                frequencySamples.shift();
+            if (samples.length > 50) {
+                samples.shift();
             }
 
-            const averageFrequency = frequencySamples.reduce((sum, freq) => sum + freq, 0) / frequencySamples.length;
+            const averageFrequency = samples.reduce((sum, freq) => sum + freq, 0) / samples.length;
 
             const closestNote = getClosestNote(averageFrequency);
 
@@ -96,4 +96,4 @@ async function startNoteDetection() {
     fileReader.readAsArrayBuffer(file);
 }
 
-startButton.addEventListener('click', startNoteDetection);
+startButton.addEventListener("click", startNoteDetection);
