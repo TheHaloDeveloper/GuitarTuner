@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guitar Tuner</title>
+    <title>Note Detector</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    Hi
+    <h1>Note Detector</h1>
+    <p>Detected Note: <span id="note">-</span></p>
+    <p>Frequency: <span id="frequency">-</span> Hz</p>
+    <input type="file" id="audioFile" accept="audio/mp3">
+    <button id="start">Start Detection</button>
+    <script src="main.js"></script>
 </body>
 </html>
