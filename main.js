@@ -19,19 +19,11 @@ const noteFrequencies = [
 ];
 
 function getClosestNote(frequency) {
-    while (frequency < 261.63) frequency *= 2;
-    while (frequency > 493.88) frequency /= 2;
-
-    let closest = noteFrequencies[0];
-    let minDiff = Math.abs(frequency - closest.frequency);
-    for (const note of noteFrequencies) {
-        const diff = Math.abs(frequency - note.frequency);
-        if (diff < minDiff) {
-            minDiff = diff;
-            closest = note;
-        }
-    }
-    return closest.note;
+    if (frequency <= 0) return "Unknown";
+    const referenceFrequency = 261.63;
+    const semitonesFromC = Math.round(12 * Math.log2(frequency / referenceFrequency));
+    const noteIndex = ((semitonesFromC % 12) + 12) % 12;
+    return noteFrequencies[noteIndex].note;
 }
 
 function autoCorrelate(buffer, sampleRate) {
