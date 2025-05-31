@@ -51,3 +51,28 @@ button {
 button:hover {
     background-color: #0097a7;
 }
+
+#instructions {
+    max-width: 600px;
+    background-color: #292929;
+    padding: 20px 25px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    color: #ddd;
+    font-size: 1rem;
+    line-height: 1.5;
+    box-shadow: 0 0 10px rgba(0, 188, 212, 0.3);
+}
+  
+#instructions h2 {
+    color: #00bcd4;
+    margin-bottom: 15px;
+}
+  
+#instructions ol {
+    padding-left: 20px;
+}
+  
+#instructions li {
+    margin-bottom: 12px;
+}

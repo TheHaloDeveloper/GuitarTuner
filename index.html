@@ -8,6 +8,17 @@
 </head>
 <body>
     <h1>Note Detector</h1>
+
+    <section id="instructions">
+        <h2>Directions</h2>
+        <ol>
+            <li><strong>Upload an Audio File:</strong> Click the <em>Choose File</em> button to upload a recorded audio clip (MP3 format recommended). Then press <em>Start Detection</em> to analyze the note and frequency.</li>
+            <li><strong>Use Your Microphone:</strong> Click <em>Start Microphone Detection</em> to allow the app to listen live and detect the musical note you’re playing or singing in real time.</li>
+            <li><strong>View Results:</strong> The detected musical note and its frequency (in Hz) will be shown above.</li>
+            <li><strong>Tips for Best Results:</strong> Play or sing clearly and steadily near your microphone. Avoid background noise for more accurate detection.</li>
+        </ol>
+    </section>
+
     <p>Detected Note: <span id="note">-</span></p>
     <p>Frequency: <span id="frequency">-</span> Hz</p>
     <input type="file" id="audioFile" accept="audio/mp3">
