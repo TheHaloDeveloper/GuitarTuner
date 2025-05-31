@@ -55,6 +55,16 @@ function autoCorrelate(buffer, sampleRate) {
     return -1;
 }
 
+function detectFrequency(analyser, buffer, sampleRate) {
+    analyser.getFloatTimeDomainData(buffer);
+    const freq = autoCorrelate(buffer, sampleRate);
+    if (freq > 0) {
+        const note = getClosestNote(freq);
+        noteElement.textContent = note;
+        frequencyElement.textContent = freq.toFixed(2);
+    }
+}
+
 startButton.addEventListener("click", async () => {
     const file = audioFileInput.files[0];
     if (!file) return alert("Please select an audio file");
@@ -83,3 +93,50 @@ startButton.addEventListener("click", async () => {
         }
     }, 500);
 });
+
+let micStream = null;
+let micAnalyser = null;
+let micBuffer = null;
+let micInterval = null;
+
+async function startMicDetection() {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const source = audioContext.createMediaStreamSource(micStream);
+
+    micAnalyser = audioContext.createAnalyser();
+    micAnalyser.fftSize = 2048;
+    micBuffer = new Float32Array(micAnalyser.fftSize);
+
+    source.connect(micAnalyser);
+
+    function micLoop() {
+        if (!micStream) return;
+        detectFrequency(micAnalyser, micBuffer, audioContext.sampleRate);
+        requestAnimationFrame(micLoop);
+    }
+    micLoop();
+}
+
+function stopMicDetection() {
+    if (micInterval) clearInterval(micInterval);
+    if (micStream) {
+        micStream.getTracks().forEach((track) => track.stop());
+    }
+    micStatus.textContent = "Microphone: Off";
+    micStream = null;
+}
+
+const micToggle = document.getElementById("micToggle");
+const micStatus = document.getElementById("micStatus");
+
+micToggle.addEventListener("click", async () => {
+    if (!micStream) {
+        await startMicDetection();
+        micStatus.textContent = "Microphone: On";
+    } else {
+        stopMicDetection();
+    }
+});
+
+window.addEventListener("beforeunload", stopMicDetection);
