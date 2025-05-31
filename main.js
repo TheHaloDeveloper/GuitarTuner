@@ -7,7 +7,7 @@ const noteFrequencies = [
   {note: "C", frequency: 261.63},
   {note: "C#", frequency: 277.18},
   {note: "D", frequency: 293.66},
-  {note: "D#", frequency: 311.13 },
+  {note: "D#", frequency: 311.13},
   {note: "E", frequency: 329.63},
   {note: "F", frequency: 349.23},
   {note: "F#", frequency: 369.99},
